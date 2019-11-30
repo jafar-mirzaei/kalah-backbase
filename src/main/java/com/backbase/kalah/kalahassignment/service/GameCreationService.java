@@ -39,11 +39,10 @@ public class GameCreationService {
   private List<GameStatusModel> generateDefaultGameStatus(final GameEntity gameEntity) {
     List<GameStatusModel> gameStatusModels = new ArrayList<>();
     for (int i = 0; i < 14; i++) {
-      final GameStatusModel gameStatusModel = new GameStatusModel();
       gameStatusModels.add(GameStatusModelBuilder.aGameStatus()
                                                  .withGameEntity(gameEntity)
                                                  .withStoneCount(stoneCount)
-                                                 .withKalah((i % 7) == 0)
+                                                 .withKalah(((i + 1) % 7) == 0)
                                                  .withPitId(i)
                                                  .build());
     }

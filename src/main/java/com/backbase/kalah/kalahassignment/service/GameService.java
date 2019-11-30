@@ -49,7 +49,7 @@ public class GameService {
   private void validateAndInitializeMoveRequest(final Long gameId, final int pitId) throws InvalidGameIdException,
                                                                                            GameFinishedException {
     final Optional<GameEntity> byId = gameRepository.findById(gameId);
-    if (byId.isPresent()) {
+    if (!byId.isPresent()) {
       throw new InvalidGameIdException("GameId:" + gameId);
     }
     if (byId.get().isFinished()) {
