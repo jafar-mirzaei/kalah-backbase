@@ -1,5 +1,7 @@
 package com.backbase.kalah.kalahassignment.controller;
 
+import com.backbase.kalah.kalahassignment.controller.dto.GameStatus;
+import com.backbase.kalah.kalahassignment.controller.dto.GamesResponse;
 import com.backbase.kalah.kalahassignment.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +26,8 @@ public class KalahController {
   }
 
   @PutMapping("/{gameId}/pits/{pitId}")
-  public GameStatus makeMove(@PathVariable int gameId,
-                          @PathVariable int pitId) {
+  public GameStatus makeMove(@PathVariable Long gameId,
+                             @PathVariable Integer pitId) throws Throwable {
 
     return gameService.move(gameId, pitId);
   }

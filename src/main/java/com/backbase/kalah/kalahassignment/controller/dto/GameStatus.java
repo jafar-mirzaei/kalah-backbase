@@ -1,4 +1,4 @@
-package com.backbase.kalah.kalahassignment.controller;
+package com.backbase.kalah.kalahassignment.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

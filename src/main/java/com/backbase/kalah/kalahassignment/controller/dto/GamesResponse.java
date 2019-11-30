@@ -1,4 +1,4 @@
-package com.backbase.kalah.kalahassignment.controller;
+package com.backbase.kalah.kalahassignment.controller.dto;
 
 public class GamesResponse {
   private final String id;

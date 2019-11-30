@@ -17,8 +17,9 @@ import javax.persistence.Table;
 @Table(name = "GAME")
 public class GameEntity extends BaseAuditEntity {
   private Long gameId;
-  private List<GameStatus> gameStatuses;
+  private List<GameStatusModel> gameStatusModels;
   private String turnSessionId;
+  private boolean finished;
 
   @Id
   @Column
@@ -33,12 +34,12 @@ public class GameEntity extends BaseAuditEntity {
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
   @JsonManagedReference
-  public List<GameStatus> getGameStatuses() {
-    return gameStatuses;
+  public List<GameStatusModel> getGameStatusModels() {
+    return gameStatusModels;
   }
 
-  public void setGameStatuses(final List<GameStatus> gameStatuses) {
-    this.gameStatuses = gameStatuses;
+  public void setGameStatusModels(final List<GameStatusModel> gameStatusModels) {
+    this.gameStatusModels = gameStatusModels;
   }
 
   @Column(length = 250)
@@ -48,5 +49,14 @@ public class GameEntity extends BaseAuditEntity {
 
   public void setTurnSessionId(final String turnSessionId) {
     this.turnSessionId = turnSessionId;
+  }
+
+  @Column
+  public boolean isFinished() {
+    return finished;
+  }
+
+  public void setFinished(final boolean finished) {
+    this.finished = finished;
   }
 }

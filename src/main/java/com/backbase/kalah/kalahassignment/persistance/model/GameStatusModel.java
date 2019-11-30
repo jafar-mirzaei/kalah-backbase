@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "GAME_STATUS")
-public class GameStatus extends BaseAuditEntity {
+public class GameStatusModel extends BaseAuditEntity {
   private Long id;
 
   private GameEntity gameEntity;
