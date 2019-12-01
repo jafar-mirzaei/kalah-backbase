@@ -18,7 +18,9 @@ import javax.persistence.Table;
 public class GameEntity extends BaseAuditEntity {
   private Long gameId;
   private List<GameStatusModel> gameStatusModels;
-  private String turnSessionId;
+  private String playerSessionId;
+  private Player player;
+  private Player winner;
   private boolean finished;
 
   @Id
@@ -43,12 +45,12 @@ public class GameEntity extends BaseAuditEntity {
   }
 
   @Column(length = 250)
-  public String getTurnSessionId() {
-    return turnSessionId;
+  public String getPlayerSessionId() {
+    return playerSessionId;
   }
 
-  public void setTurnSessionId(final String turnSessionId) {
-    this.turnSessionId = turnSessionId;
+  public void setPlayerSessionId(final String playerSessionId) {
+    this.playerSessionId = playerSessionId;
   }
 
   @Column
@@ -58,5 +60,23 @@ public class GameEntity extends BaseAuditEntity {
 
   public void setFinished(final boolean finished) {
     this.finished = finished;
+  }
+
+  @Column
+  public Player getPlayer() {
+    return player;
+  }
+
+  public void setPlayer(final Player player) {
+    this.player = player;
+  }
+
+  @Column
+  public Player getWinner() {
+    return winner;
+  }
+
+  public void setWinner(final Player winner) {
+    this.winner = winner;
   }
 }

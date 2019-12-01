@@ -43,6 +43,7 @@ public class GameService {
     for (GameRuleExecutor gameRuleExecutor : gameRuleExecutorList) {
       gameRuleExecutor.executeRule();
     }
+    gameRepository.save(userRequestSessionData.getGameEntity());
     return userRequestSessionData.getFinalGameStatus();
   }
 
@@ -57,5 +58,7 @@ public class GameService {
     }
     userRequestSessionData.setGameEntity(byId.get());
     userRequestSessionData.setPitId(pitId);
+    //Before change turn need to save current player in request session
+    userRequestSessionData.setCurrentPlayer(userRequestSessionData.getGameEntity().getPlayer());
   }
 }

@@ -4,6 +4,7 @@ import com.backbase.kalah.kalahassignment.controller.dto.GamesResponse;
 import com.backbase.kalah.kalahassignment.persistance.model.GameEntity;
 import com.backbase.kalah.kalahassignment.persistance.model.GameStatusModel;
 import com.backbase.kalah.kalahassignment.persistance.model.GameStatusModelBuilder;
+import com.backbase.kalah.kalahassignment.persistance.model.Player;
 import com.backbase.kalah.kalahassignment.persistance.repository.GameRepository;
 import com.backbase.kalah.kalahassignment.util.KalahUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class GameCreationService {
   public GamesResponse create() {
     final String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
     GameEntity gameEntity = new GameEntity();
-    gameEntity.setTurnSessionId(sessionId);
+    gameEntity.setPlayerSessionId(sessionId);
     gameEntity.setFinished(false);
-    //    gameRepository.save(gameEntity);
+    gameEntity.setPlayer(Player.FIRST);
     gameEntity.setGameStatusModels(generateDefaultGameStatus(gameEntity));
     gameRepository.save(gameEntity);
     return new GamesResponse(String.valueOf(gameEntity.getGameId()), kalahUtil.getGameUrl(gameEntity.getGameId()));

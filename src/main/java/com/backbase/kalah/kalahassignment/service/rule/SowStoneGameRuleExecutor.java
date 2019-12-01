@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 @Service
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
-public class MovementGameRuleExecutor extends AbstractGameRuleExecutor {
+public class SowStoneGameRuleExecutor extends AbstractGameRuleExecutor {
 
   @Override public void executeRule() throws Throwable {
     final List<GameStatusModel> gameStatusModels = userRequestSessionData.getGameEntity()
@@ -23,12 +23,12 @@ public class MovementGameRuleExecutor extends AbstractGameRuleExecutor {
         .findFirst()
         .orElseThrow((Supplier<Throwable>) () -> new InvalidPitIdException(
             "pitId:" + userRequestSessionData.getPitId()));
-    final int indexOf = gameStatusModels.indexOf(first);
-    int addToIndex = indexOf;
+    int addToIndex = gameStatusModels.indexOf(first);
     while (first.getStoneCount() > 0) {
       addToIndex = (addToIndex + 1) % gameStatusModels.size();
       gameStatusModels.get(addToIndex).setStoneCount(gameStatusModels.get(addToIndex).getStoneCount() + 1);
       first.setStoneCount(first.getStoneCount() - 1);
     }
+    userRequestSessionData.setLastUpdatedStatusIndex(addToIndex);
   }
 }
