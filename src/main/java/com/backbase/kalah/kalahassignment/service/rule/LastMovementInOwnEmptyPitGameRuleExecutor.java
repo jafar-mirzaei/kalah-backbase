@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Order(value = 3)
 public class LastMovementInOwnEmptyPitGameRuleExecutor extends AbstractGameRuleExecutor {
 
-  @Override public void executeRule() throws Throwable {
+  @Override public void executeRule() {
     // Should Move all stone to own pit and opposite pit to own kalah if
     //  ( last stone in own pit AND after movement there is one stone in it)
     if (

@@ -13,15 +13,17 @@ import java.util.function.Supplier;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class SowStoneGameRuleExecutor extends AbstractGameRuleExecutor {
 
-  @Override public void executeRule() throws Throwable {
+  @Override public void executeRule() {
     final List<GameStatusModel> gameStatusModels = userRequestSessionData.getGameEntity()
                                                                          .getGameStatusModels();
-    final GameStatusModel first = gameStatusModels
+    final GameStatusModel first;
+
+    first = gameStatusModels
         .stream()
         .filter(gameStatus -> userRequestSessionData.getPitId() ==
                               gameStatus.getPitId())
         .findFirst()
-        .orElseThrow((Supplier<Throwable>) () -> new InvalidPitIdException(
+        .orElseThrow((Supplier<RuntimeException>) () -> new InvalidPitIdException(
             "pitId:" + userRequestSessionData.getPitId()));
     int addToIndex = gameStatusModels.indexOf(first);
     while (first.getStoneCount() > 0) {

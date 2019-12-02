@@ -5,7 +5,7 @@ package com.backbase.kalah.kalahassignment.exception;
  * @version 1.0 2019.1130
  * @since 1.0
  */
-public final class InvalidPitIdException extends Exception {
+public final class InvalidPitIdException extends RuntimeException {
   public InvalidPitIdException(final String message) {
     super(message);
 

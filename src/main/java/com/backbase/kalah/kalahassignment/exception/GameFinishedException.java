@@ -5,7 +5,7 @@ package com.backbase.kalah.kalahassignment.exception;
  * @version 1.0 2019.1130
  * @since 1.0
  */
-public final class GameFinishedException extends Exception {
+public final class GameFinishedException extends RuntimeException {
   public GameFinishedException(final String message) {
     super(message);
 

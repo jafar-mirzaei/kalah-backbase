@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CheckFinishGameRuleExecutor extends AbstractGameRuleExecutor {
 
 
-  @Override public void executeRule() throws Throwable {
+  @Override public void executeRule()  {
     final Optional<GameStatusModel> findNonEmptyPit = currentUserGameStatuses().stream()
                                                                                .filter(gameStatusModel -> userRequestSessionData
                                                                                    .getCurrentPlayer()

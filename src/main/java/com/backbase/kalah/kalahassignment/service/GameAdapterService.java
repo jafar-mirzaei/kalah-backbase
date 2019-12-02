@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class GameService {
+public class GameAdapterService {
   private final GameRepository gameRepository;
   private final GameCreationService gameCreationService;
   private final List<GameRuleExecutor> gameRuleExecutorList;
   private final UserRequestSessionData userRequestSessionData;
 
   @Autowired
-  public GameService(
+  public GameAdapterService(
       final GameRepository gameRepository,
       final GameCreationService gameCreationService,
       final List<GameRuleExecutor> gameRuleExecutorList,
@@ -33,7 +33,7 @@ public class GameService {
     this.userRequestSessionData = userRequestSessionData;
   }
 
-  public GamesResponse getGame() {
+  public GamesResponse createGame() {
     return gameCreationService.create();
 
   }
@@ -47,8 +47,7 @@ public class GameService {
     return userRequestSessionData.getFinalGameStatus();
   }
 
-  private void validateAndInitializeMoveRequest(final Long gameId, final int pitId) throws InvalidGameIdException,
-                                                                                           GameFinishedException {
+  private void validateAndInitializeMoveRequest(final Long gameId, final int pitId) {
     final Optional<GameEntity> byId = gameRepository.findById(gameId);
     if (!byId.isPresent()) {
       throw new InvalidGameIdException("GameId:" + gameId);

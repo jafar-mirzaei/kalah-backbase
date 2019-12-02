@@ -2,7 +2,7 @@ package com.backbase.kalah.kalahassignment.controller;
 
 import com.backbase.kalah.kalahassignment.controller.dto.GameStatus;
 import com.backbase.kalah.kalahassignment.controller.dto.GamesResponse;
-import com.backbase.kalah.kalahassignment.service.GameService;
+import com.backbase.kalah.kalahassignment.service.GameAdapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class KalahController {
 
   @Autowired
-  private GameService gameService;
+  private GameAdapterService gameAdapterService;
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public GamesResponse games() {
-    return gameService.getGame();
+    return gameAdapterService.createGame();
   }
 
   @PutMapping("/{gameId}/pits/{pitId}")
   public GameStatus makeMove(@PathVariable Long gameId,
                              @PathVariable Integer pitId) throws Throwable {
 
-    return gameService.move(gameId, pitId);
+    return gameAdapterService.move(gameId, pitId);
   }
 
 }
