@@ -1,21 +1,22 @@
 package com.backbase.kalah.kalahassignment.service.rule;
 
+import com.backbase.kalah.kalahassignment.controller.dto.UserRequestSessionData;
 import com.backbase.kalah.kalahassignment.persistance.model.GameStatusModel;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-@Service
-@Order(value = Ordered.LOWEST_PRECEDENCE)
-public class CheckFinishGameRuleExecutor extends AbstractGameRuleExecutor {
+public final class CheckFinishGameRuleExecutor extends AbstractGameRuleExecutor {
 
 
-  @Override public void executeRule()  {
+  public CheckFinishGameRuleExecutor(
+      final GameRuleExecutor nexGameRuleExecutor) {super(nexGameRuleExecutor);}
+
+  @Override public void executeRule(
+      final UserRequestSessionData userRequestSessionData) {
+    super.executeRule(userRequestSessionData);
     final Optional<GameStatusModel> findNonEmptyPit = currentUserGameStatuses().stream()
-                                                                               .filter(gameStatusModel -> userRequestSessionData
+                                                                               .filter(gameStatusModel -> getUserRequestSessionData()
                                                                                    .getCurrentPlayer()
                                                                                    .isMyPit(
                                                                                        gameStatusModel
@@ -29,10 +30,10 @@ public class CheckFinishGameRuleExecutor extends AbstractGameRuleExecutor {
     if (!findNonEmptyPit.isPresent()) {
       final AtomicReference<Integer> sumOfRemindStone = new AtomicReference<>(0);
       currentUserGameStatuses().stream()
-                               .filter(gameStatusModel -> userRequestSessionData.getCurrentPlayer().getOpponent()
-                                                                                .isMyPit(
-                                                                                    gameStatusModel
-                                                                                        .getPitId()))
+                               .filter(gameStatusModel -> getUserRequestSessionData().getCurrentPlayer().getOpponent()
+                                                                                     .isMyPit(
+                                                                                         gameStatusModel
+                                                                                             .getPitId()))
                                .filter(gameStatusModel -> !gameStatusModel.getKalah())
                                .forEach(gameStatusModel -> {
                                  sumOfRemindStone.updateAndGet(v -> v + gameStatusModel.getStoneCount());
@@ -45,10 +46,11 @@ public class CheckFinishGameRuleExecutor extends AbstractGameRuleExecutor {
       opponentKalahPit.setStoneCount(opponentKalahPit.getStoneCount() + sumOfRemindStone.get());
       currentUserGameEntity().setFinished(true);
       currentUserGameEntity().setWinner(opponentKalahPit.getStoneCount() <
-                                        currentUserKalahPit.getStoneCount() ? userRequestSessionData.getCurrentPlayer() : userRequestSessionData
+                                        currentUserKalahPit.getStoneCount() ? getUserRequestSessionData().getCurrentPlayer() : getUserRequestSessionData()
           .getCurrentPlayer()
           .getOpponent());
     }
+    callNext();
   }
 
 }

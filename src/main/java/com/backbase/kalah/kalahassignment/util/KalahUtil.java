@@ -5,10 +5,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KalahUtil {
-  @Value("${server.url:http://localhost:${server.port}}")
-  private String serverUrl;
+  private static String SERVER_URL;
 
-  public String getGameUrl(final Long gameId) {
-    return serverUrl + "/games/" + gameId;
+  public static String getGameUrl(final Long gameId) {
+    return SERVER_URL + "/games/" + gameId;
+  }
+
+  @Value("${server.url:http://localhost:${server.port}}")
+  public void setServerUrl(final String serverUrl) {
+    SERVER_URL = serverUrl;
   }
 }

@@ -10,7 +10,6 @@ import com.backbase.kalah.kalahassignment.util.KalahUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,23 +17,22 @@ import java.util.List;
 @Service
 public class GameCreationService {
 
-  @Value("${stone.cout:6}")
+  @Value("${stone.count:6}")
   private int stoneCount;
 
+  private final GameRepository gameRepository;
+
   @Autowired
-  private GameRepository gameRepository;
-  @Autowired
-  private KalahUtil kalahUtil;
+  public GameCreationService(final GameRepository gameRepository) {this.gameRepository = gameRepository;}
+
 
   public GamesResponse create() {
-    final String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
     GameEntity gameEntity = new GameEntity();
-    gameEntity.setPlayerSessionId(sessionId);
     gameEntity.setFinished(false);
     gameEntity.setPlayer(Player.FIRST);
     gameEntity.setGameStatusModels(generateDefaultGameStatus(gameEntity));
     gameRepository.save(gameEntity);
-    return new GamesResponse(String.valueOf(gameEntity.getGameId()), kalahUtil.getGameUrl(gameEntity.getGameId()));
+    return new GamesResponse(String.valueOf(gameEntity.getGameId()), KalahUtil.getGameUrl(gameEntity.getGameId()));
   }
 
   private List<GameStatusModel> generateDefaultGameStatus(final GameEntity gameEntity) {
