@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class KalahControllerTest {
+class KalahControllerGameCreateTest {
 
   @LocalServerPort
   private int port;
@@ -32,5 +32,6 @@ class KalahControllerTest {
 
   @Test
   void makeMove() {
+
   }
 }

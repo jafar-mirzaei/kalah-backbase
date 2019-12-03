@@ -5,6 +5,7 @@ import com.backbase.kalah.kalahassignment.controller.dto.GamesResponse;
 import com.backbase.kalah.kalahassignment.controller.dto.UserRequestSessionData;
 import com.backbase.kalah.kalahassignment.persistance.repository.GameRepository;
 import com.backbase.kalah.kalahassignment.service.rule.GameRuleExecutorFactory;
+import com.backbase.kalah.kalahassignment.service.validator.GameMovementRequestValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

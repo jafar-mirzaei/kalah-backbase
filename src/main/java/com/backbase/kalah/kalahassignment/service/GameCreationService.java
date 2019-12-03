@@ -40,7 +40,8 @@ public class GameCreationService {
     for (int i = 0; i < 14; i++) {
       gameStatusModels.add(GameStatusModelBuilder.aGameStatus()
                                                  .withGameEntity(gameEntity)
-                                                 .withStoneCount(stoneCount)
+                                                 //((i + 1) % 7) == 0 ==> is in Kalah Home Pit
+                                                 .withStoneCount((((i + 1) % 7) == 0) ? 0 : stoneCount)
                                                  .withKalah(((i + 1) % 7) == 0)
                                                  .withPitId(i)
                                                  .build());

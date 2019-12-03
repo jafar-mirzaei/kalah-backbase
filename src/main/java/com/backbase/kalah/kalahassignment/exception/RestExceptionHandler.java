@@ -18,7 +18,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
       EmptyPitIdSelectedException.class,
       GameFinishedException.class,
       InvalidPitIdException.class,
-      InvalidGameIdException.class
+      InvalidGameIdException.class,
+      Throwable.class
   })
   protected ResponseEntity<ErrorDto> handleAllException(
       RuntimeException ex) {

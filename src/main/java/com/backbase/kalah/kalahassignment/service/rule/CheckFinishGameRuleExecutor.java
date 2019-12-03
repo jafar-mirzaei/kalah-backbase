@@ -27,6 +27,7 @@ public final class CheckFinishGameRuleExecutor extends AbstractGameRuleExecutor 
                                                                                            gameStatusModel.getStoneCount() !=
                                                                                            0)
                                                                                .findFirst();
+    //TODO Should we finished game when one of Kalah's pit contains more than 36 (6*6) stone?
     if (!findNonEmptyPit.isPresent()) {
       final AtomicReference<Integer> sumOfRemindStone = new AtomicReference<>(0);
       currentUserGameStatuses().stream()

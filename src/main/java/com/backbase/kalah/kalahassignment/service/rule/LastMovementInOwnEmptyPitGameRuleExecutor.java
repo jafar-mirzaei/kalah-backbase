@@ -19,7 +19,7 @@ public class LastMovementInOwnEmptyPitGameRuleExecutor extends AbstractGameRuleE
     // Should Move all stone to own pit and opposite pit to own kalah if
     //  ( last stone in own pit AND after movement there is one stone in it)
     if (
-        currentUserGameEntity().getPlayer()
+        getUserRequestSessionData().getCurrentPlayer()
                                .isMyPit((getUserRequestSessionData().getLastUpdatedStatusIndex()))
         &&
         !currentUserGameEntity().getPlayer()

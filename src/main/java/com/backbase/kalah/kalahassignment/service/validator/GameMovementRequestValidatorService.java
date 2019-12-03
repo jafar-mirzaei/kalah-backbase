@@ -1,4 +1,4 @@
-package com.backbase.kalah.kalahassignment.service;
+package com.backbase.kalah.kalahassignment.service.validator;
 
 import com.backbase.kalah.kalahassignment.controller.dto.UserRequestSessionData;
 import com.backbase.kalah.kalahassignment.exception.EmptyPitIdSelectedException;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+//Another option was executor pattern with order annotation
 @Service
 public class GameMovementRequestValidatorService {
   private final GameRepository gameRepository;
@@ -24,12 +25,21 @@ public class GameMovementRequestValidatorService {
 
   public UserRequestSessionData validateAndInitializeMoveRequest(final Long gameId, final int pitId) {
     final Optional<GameEntity> gameEntity = gameRepository.findById(gameId);
+    validateGameStatus(gameId, gameEntity);
+    validateSelectedPit(pitId, gameEntity);
+    return new UserRequestSessionData(gameEntity.get(), pitId, gameEntity.get().getPlayer());
+  }
+
+  private void validateGameStatus(final Long gameId, final Optional<GameEntity> gameEntity) {
     if (!gameEntity.isPresent()) {
-      throw new InvalidGameIdException("GameId:" + gameId+" not found.");
+      throw new InvalidGameIdException("GameId:" + gameId + " not found.");
     }
     if (gameEntity.get().isFinished()) {
-      throw new GameFinishedException("GameId:" + gameId +" is Finished");
+      throw new GameFinishedException("GameId:" + gameId + " is Finished");
     }
+  }
+
+  private void validateSelectedPit(final int pitId, final Optional<GameEntity> gameEntity) {
     final Optional<GameStatusModel> selectedPit = gameEntity.get()
                                                             .getGameStatusModels()
                                                             .stream()
@@ -46,6 +56,5 @@ public class GameMovementRequestValidatorService {
     if (!gameEntity.get().getPlayer().isMyPit(pitId)) {
       throw new InvalidPitIdException("Opponent PitId:" + pitId);
     }
-    return new UserRequestSessionData(gameEntity.get(), pitId, gameEntity.get().getPlayer());
   }
 }
