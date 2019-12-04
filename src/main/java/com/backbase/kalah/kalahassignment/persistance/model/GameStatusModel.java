@@ -15,14 +15,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "GAME_STATUS")
-public class GameStatusModel extends BaseAuditEntity {
+public class GameStatusModel extends BaseAuditEntity implements Comparable<GameStatusModel> {
   private Long id;
 
   private GameEntity gameEntity;
   private Integer pitId;
   private Integer stoneCount;
   private Boolean kalah;
-
 
 
   @Id
@@ -72,5 +71,9 @@ public class GameStatusModel extends BaseAuditEntity {
 
   public void setKalah(final Boolean kalah) {
     this.kalah = kalah;
+  }
+
+  @Override public int compareTo(final GameStatusModel o) {
+    return this.getPitId().compareTo(o.getPitId());
   }
 }

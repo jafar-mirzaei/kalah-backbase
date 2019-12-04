@@ -2,6 +2,7 @@ package com.backbase.kalah.kalahassignment.persistance.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "GAME")
@@ -42,6 +44,13 @@ public class GameEntity extends BaseAuditEntity {
   public void setGameStatusModels(final List<GameStatusModel> gameStatusModels) {
     this.gameStatusModels = gameStatusModels;
   }
+
+  @Transient
+  public List<GameStatusModel> getSortedGameStatusModels() {
+    gameStatusModels.sort(Comparator.comparing(GameStatusModel::getPitId));
+    return gameStatusModels;
+  }
+
 
   @Column
   public boolean isFinished() {

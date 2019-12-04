@@ -1,8 +1,8 @@
-package com.backbase.kalah.kalahassignment.service.rule;
+package com.backbase.kalah.kalahassignment.rule;
 
 import com.backbase.kalah.kalahassignment.controller.dto.UserRequestSessionData;
 
-public interface GameRuleExecutor {
-  void executeRule(
+public interface GameRuleChain {
+  void applyRule(
       final UserRequestSessionData userRequestSessionData);
 }
